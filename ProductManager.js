@@ -108,6 +108,7 @@ const productManager = new ProductManager('products.txt');
 (async () => {
   await productManager.addProduct(product1);
   await productManager.addProduct(product2);
+  await productManager.addProduct(product5);
 
   console.log(await productManager.getProducts());
   console.log(await productManager.getProductById(2));
