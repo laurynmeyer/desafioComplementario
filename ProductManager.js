@@ -43,7 +43,6 @@ class ProductManager {
     }
 
     if (product.code != "" && product.stock >= 0) {
-      product.id = Product.incrementarID();
       this.products.push(product);
       await this.saveData();
     } else {
