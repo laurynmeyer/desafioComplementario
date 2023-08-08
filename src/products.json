@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Notebook 1",
+    "description": "CORE I5 1173G7",
+    "price": 2000,
+    "thumbnail": "",
+    "code": "PO1",
+    "stock": 4,
+    "id": 1
+  },
+  {
+    "title": "NotebooK 3",
+    "description": "CORE I7-12345G9",
+    "price": 7000,
+    "thumbnail": "",
+    "code": "PO2",
+    "stock": 5,
+    "id": 2
+  },
+  {
+    "title": "Notebook 3",
+    "description": "CORE I7",
+    "price": 5000,
+    "thumbnail": "",
+    "code": "PO7",
+    "stock": 5,
+    "id": 3
+  }
+]

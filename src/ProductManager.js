@@ -1,6 +1,7 @@
-import { promises as fs } from 'fs'
+import fs from 'fs-extra';
 
-class ProductManager {
+
+export default class ProductManager {
   constructor(filePath) {
     this.products = [];
     this.path = filePath;
@@ -8,8 +9,7 @@ class ProductManager {
 
   async readData() {
     try {
-      const consultarTXT = await fs.readFile(this.path, 'utf-8');
-      this.products = JSON.parse(consultarTXT);
+      this.products = await fs.readJSON(this.path);
     } catch (error) {
       this.products = [];
     }
@@ -17,7 +17,7 @@ class ProductManager {
 
   async saveData() {
     try {
-      await fs.writeFile(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
+      await fs.writeJSON(this.path, this.products, { spaces: 2});
     } catch (error) {
       console.error("Error saving data to file:", error);
       throw new Error("Error saving data to file");
@@ -102,7 +102,7 @@ const product1 = new Product("Notebook 1", "CORE I5 1173G7", 2000, "", "PO1", 4)
 const product2 = new Product("Notebook 2", "CORE I7", 5000, "", "PO2", 5);
 const product5 = new Product("Notebook 3", "CORE I7", 5000, "", "PO7", 5);
 
-const productManager = new ProductManager('products.txt');
+const productManager = new ProductManager('./src/products.json');
 
 (async () => {
   await productManager.addProduct(product1);
@@ -113,9 +113,10 @@ const productManager = new ProductManager('products.txt');
   console.log(await productManager.getProductById(2));
 
   // modificar producto
-  await productManager.updateProduct(5, { title: 'NotebooK 3', description: 'CORE I7-12345G9',price: 7000 });
-
+  /** 
+  await productManager.updateProduct(2, { title: 'NotebooK 3', description: 'CORE I7-12345G9',price: 7000 });//
   //Borrar producto
+  
 /**  await productManager.deleteProduct(5); **/
 
   console.log(await productManager.getProducts());
