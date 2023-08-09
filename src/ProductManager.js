@@ -17,7 +17,7 @@ export default class ProductManager {
 
   async saveData() {
     try {
-      await fs.writeJSON(this.path, this.products, { spaces: 2});
+      await fs.writeJSON(this.path, this.products, { spaces: 2 });
     } catch (error) {
       console.error("Error saving data to file:", error);
       throw new Error("Error saving data to file");
@@ -97,7 +97,7 @@ class Product {
   }
 }
 
-// ejemplo de productos
+/*ejemplo de productos
 const product1 = new Product("Notebook 1", "CORE I5 1173G7", 2000, "", "PO1", 4);
 const product2 = new Product("Notebook 2", "CORE I7", 5000, "", "PO2", 5);
 const product5 = new Product("Notebook 3", "CORE I7", 5000, "", "PO7", 5);
@@ -117,8 +117,9 @@ const productManager = new ProductManager('./src/products.json');
   await productManager.updateProduct(2, { title: 'NotebooK 3', description: 'CORE I7-12345G9',price: 7000 });//
   //Borrar producto
   
-/**  await productManager.deleteProduct(5); **/
+ await productManager.deleteProduct(5); 
 
   console.log(await productManager.getProducts());
 })();
 
+*/
