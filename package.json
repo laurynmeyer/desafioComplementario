@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "ProductManager.js",
+  "main": "main.js",
   "scripts": {
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/main.js"
   },
   "repository": {
     "type": "git",
