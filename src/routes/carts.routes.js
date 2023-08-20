@@ -1,23 +1,17 @@
-import { Router } from 'express';
-import CartManager from '../controllers/cartManager.js';
+import { Router } from "express";
+import CartManager from "../controllers/cartManager.js";
 
 const routerCarts = Router();
-const cartManager = new CartManager('./src/models/carts.json');
+const cartManager = new CartManager("./src/models/carts.json");
 
-routerCarts.post('/', async (req, res) => {
+routerCarts.post("/", async (req, res) => {
   const newCart = await cartManager.createCart();
   res.status(201).json(newCart);
 });
 
-routerCarts.get('/:cid', async (req, res) => {
+routerCarts.get("/:cid", async (req, res) => {
   const { cid } = req.params;
-
-  console.log("CID value:", cid);
-
   const cart = await cartManager.getCartById(parseInt(cid));
-
-  console.log("Cart retrieved:", cart);
-
   if (cart) {
     res.status(200).json(cart);
   } else {
@@ -25,18 +19,11 @@ routerCarts.get('/:cid', async (req, res) => {
   }
 });
 
-routerCarts.post('/:cid/product/:pid', async (req, res) => {
+routerCarts.post("/:cid/product/:pid", async (req, res) => {
   const { cid, pid } = req.params;
 
   const cartId = parseInt(cid);
   const productId = parseInt(pid);
-
-  const cart = await cartManager.getCartById(cartId);
-
-  if (!cart) {
-    return res.status(404).send("Cart not found");
-  }
-
   const success = await cartManager.addProductToCart(cartId, productId);
 
   if (success) {
@@ -45,6 +32,5 @@ routerCarts.post('/:cid/product/:pid', async (req, res) => {
     res.status(400).send("Failed to add product to cart");
   }
 });
-
 
 export default routerCarts;
