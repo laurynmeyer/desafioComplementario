@@ -94,7 +94,8 @@ export class Product {
     this.code = code;
     this.stock = stock;
   }
-
+}
+  /** 
   async registration() {
     const productManager = new ProductManager('./src/models/products.json'); 
     const product1 = new Product("Dell Latitud 7470", "Procesador Intel. Memoria RAM de 16GB. Pantalla LED de 15. Es antirreflejo", 870000, true, "Sin imagen", "Dell01", 17);
@@ -109,6 +110,5 @@ export class Product {
 
 const product = new Product(); 
 product.registration(); 
-
-
+**/
 
