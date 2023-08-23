@@ -2,7 +2,7 @@ body {
     font-family: 'Times New Roman', Times, serif;
     margin: 0;
     padding: 20px;
-    background-color: #ccc;
+    background-color: #f8f0f0;
 }
 
 h1 {
@@ -16,7 +16,7 @@ form {
     border: 10px #353333;
     border-radius: 10px;
     border-style: outset;
-    background-color: #cacaca;
+    background-color: #ddd4d4;
 
 }
 
@@ -30,12 +30,13 @@ input {
 input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #f3f0f0;
 }
 
 button {
-    background-color: cadetblue;
+    background-color: rgb(41, 204, 233);
     color: #fff;
+    font-weight: bold;
     margin-top: 10px;
     padding: 10px 20px;
     border: none;

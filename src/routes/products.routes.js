@@ -52,6 +52,11 @@ routerProds.delete('/:pid', async (req, res) => {
         res.status(400).send("product not found")
 })
 
+routerProds.get('/realtimeproducts', async (req, res) => {
+    const prods = await productManager.getProducts();
+    res.render('realTimeProducts', { products: prods }); 
+});
+
 export default routerProds
 
 

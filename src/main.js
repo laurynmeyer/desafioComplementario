@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
 
   socket.on('newProduct', (prod) => {
     console.log(prod)
-    socket.emit("ProductCreated", "Product created successfully")
+    socket.emit("ProductCreated", prod)
   })
 })
 
@@ -61,7 +61,15 @@ app.use('/static', express.static(path.join(__dirname, '/public')));
 app.use('/api/products', routerProds);
 
 //HBS
+
 app.get('/static', (req, res) => {
+	res.render('home', {
+		rutaCSS: 'home',
+		rutaJS: 'home',
+	});
+});
+
+app.get('/static/realtimeproducts', (req, res) => {
   res.render('realTimeProducts', {
     rutaCSS: 'realTimeProducts',
     rutaJS: 'realTimeProducts',

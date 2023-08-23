@@ -1,10 +1,12 @@
 import fs from 'fs-extra';
+import io from 'socket.io-client';
 
 
 export default class ProductManager {
   constructor(filePath) {
     this.products = [];
     this.path = filePath;
+    this.socket = io();
   }
 
   static incrementarID() {
@@ -47,6 +49,9 @@ export default class ProductManager {
       product.id = newID;
       prods.push(product);
       await fs.writeFile(this.path, JSON.stringify(prods));
+
+      this.socket.emit('newProduct', product);
+
       return true;
     }
   }
@@ -95,17 +100,17 @@ export class Product {
     this.stock = stock;
   }
 }
-  /** 
-  async registration() {
-    const productManager = new ProductManager('./src/models/products.json'); 
-    const product1 = new Product("Dell Latitud 7470", "Procesador Intel. Memoria RAM de 16GB. Pantalla LED de 15. Es antirreflejo", 870000, true, "Sin imagen", "Dell01", 17);
-    const product2 = new Product("Dell Latitud 7460", "Procesador Intel. Memoria RAM de 8GB. Pantalla LED de 15. Es antirreflejo", 960000, true, "Sin imagen", "Dell02", 12);
-    const product3 = new Product("Dell Latitud 7420", "Procesador Intel. Memoria RAM de 4GB. Pantalla LED de 14. Es antirreflejo", 760000, true, "Sin imagen", "Dell03", 8);
+  /**
+async registration() {
+  const productManager = new ProductManager('./src/models/products.json'); 
+  const product1 = new Product("Dell Latitud 7470", "Procesador Intel. Memoria RAM de 16GB. Pantalla LED de 15. Es antirreflejo", 870000, true, "Sin imagen", "Dell01", 17);
+  const product2 = new Product("Dell Latitud 7460", "Procesador Intel. Memoria RAM de 8GB. Pantalla LED de 15. Es antirreflejo", 960000, true, "Sin imagen", "Dell02", 12);
+  const product3 = new Product("Dell Latitud 7420", "Procesador Intel. Memoria RAM de 4GB. Pantalla LED de 14. Es antirreflejo", 760000, true, "Sin imagen", "Dell03", 8);
 
-    await productManager.addProduct(product1);
-    await productManager.addProduct(product2);
-    await productManager.addProduct(product3);
-  }
+  await productManager.addProduct(product1);
+  await productManager.addProduct(product2);
+  await productManager.addProduct(product3);
+}
 }
 
 const product = new Product(); 
