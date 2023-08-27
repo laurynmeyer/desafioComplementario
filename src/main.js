@@ -10,6 +10,8 @@ import { Product } from './controllers/productManager.js';
 import { __filename, __dirname } from './path.js';
 import path from 'path';
 
+const productManager = new ProductManager("./src/models/products.json")
+
 const port = 4000;
 const app = express();
 
@@ -47,9 +49,13 @@ const upload = multer({ storage: storage });
 io.on("connection", (socket) => {
   console.log("Conexión con Socket.io")
 
-  socket.on('newProduct', (prod) => {
+//Agrego async para poder llamar al metodo getProducts()
+  socket.on('newProduct', async(prod) => {
     console.log(prod)
-    socket.emit("ProductCreated", prod)
+    productManager.addProduct(prod)
+    const products = await productManager.getProducts();
+    //Cambie "CreatedProduct" por "products" ya que devuelvo todos los productos
+    socket.emit("products", products)
   })
 })
 
@@ -62,10 +68,15 @@ app.use('/api/products', routerProds);
 
 //HBS
 
-app.get('/static', (req, res) => {
+//La vista de home tiene que ser a traves de Handlebars, sin utilizar socket.
+//Agrego async para usar el metodo getProducts, y envio los productos como parametro. (Fijate en el codigo del profe como lo hizo en users.handlebars)
+app.get('/static',async (req, res)  => {
+  const products = await productManager.getProducts()
 	res.render('home', {
 		rutaCSS: 'home',
 		rutaJS: 'home',
+    products
+    
 	});
 });
 
@@ -84,8 +95,5 @@ app.post('/upload', upload.single('product'), (req, res) => {
   console.log(req.body)
   res.status(200).send("Imagen cargada")
 })
-
-
-
 
 

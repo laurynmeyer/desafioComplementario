@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <div id='product-list'>
-
-    </div>
-<script src="../public/js/realTimeProducts.js"></script>
-</body>
-
-</html>
+{{#each products}}
+<ul>
+    <li>{{this.id}}</li>
+    <li>{{this.title}}</li>
+    <li>{{this.description}}</li>
+    <li>{{this.price}}</li>
+    <li>{{this.status}}</li>
+    <li>{{this.code}}</li>
+    <li>{{this.stock}}</li>
+</ul>
+{{/each}}
