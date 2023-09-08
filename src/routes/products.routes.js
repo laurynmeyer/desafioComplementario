@@ -1,62 +1,76 @@
-import { Router } from 'express'
-import ProductManager from '../controllers/productManager.js'
+import { Router } from 'express';
+import productModel from "../models/products.models.js";
 
-const routerProds = Router()
+const productRouter = Router()
 
-const productManager = new ProductManager('./src/models/products.json')
-
-routerProds.get('/', async (req, res) => {
+productRouter.get('/', async (req, res) => {
     const { limit } = req.query
-
-    const prods = await productManager.getProducts()
-    const products = prods.slice(0, limit)
-    res.status(200).send(products)
+    try {
+        const prod = await productModel.find().limit(limit)
+        res.status(200).send({ resultado: 'OK', message: prod })
+    } catch (error) {
+        res.status(400).send({ error: `Error al consultar productos: ${error}` })
+    }
 })
 
-routerProds.get('/:pid', async (req, res) => {
-    const { pid } = req.params; // Cambio aquí: utilizar pid en lugar de id
-    const prod = await productManager.getProductByid(parseInt(pid))
+productRouter.get('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const prod = await productModel.findById(id)
+        if (prod)
+            res.status(200).send({ resultado: 'OK', message: prod })
+        else
+            res.status(404).send({ resultado: 'Not Found', message: prod })
 
-    if (prod)
-        res.status(200).send(prod)
-    else
-        res.status(404).send("non-existent product")
+    } catch (error) {
+        res.status(400).send({ error: `Error al consultar productos: ${error}` })
+    }
 })
 
-routerProds.post('/', async (req, res) => {
-    const confirmation = await productManager.addProduct(req.body)
+productRouter.post('/', async (req, res) => {
+    const { title, description, stock, code, price, category } = req.body
 
-    if (confirmation)
-        res.status(200).send("product created successfully")
-    else
-        res.status(400).send("existing product")
+    try {
+        const respuesta = await productModel.create({
+            title, description, stock, code, price, category
+        })
+        res.status(200).send({ resultado: 'OK', message: respuesta })
+
+    } catch (error) {
+        res.status(400).send({ error: `Error al crear producto: ${error}` })
+    }
 })
 
-routerProds.put('/:pid', async (req, res) => {
-    const { pid } = req.params; // Cambio aquí: utilizar pid en lugar de id
-    const confirmation = await productManager.updateProduct(parseInt(pid), req.body)
+productRouter.put('/:id', async (req, res) => {
+    const { id } = req.params
+    const { title, description, stock, code, price, category, status } = req.body
+    try {
+        const prod = await productModel.findByIdAndUpdate(id, title, description, stock, code, price, category, status)
+        if (prod)
+            res.status(200).send({ resultado: 'OK', message: prod })
+        else
+            res.status(404).send({ resultado: 'Not Found', message: prod })
 
-    if (confirmation)
-        res.status(200).send("product updated successfully")
-    else
-        res.status(400).send("product not found")
+    } catch (error) {
+        res.status(400).send({ error: `Error al modificar productos: ${error}` })
+    }
 })
 
-routerProds.delete('/:pid', async (req, res) => {
-    const { pid } = req.params; // Cambio aquí: utilizar pid en lugar de id
-    const confirmation = await productManager.deleteProduct(parseInt(pid))
 
-    if (confirmation)
-        res.status(200).send("product deleted successfully")
-    else
-        res.status(400).send("product not found")
+productRouter.delete('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const prod = await productModel.findByIdAndDelete(id)
+        if (prod)
+            res.status(200).send({ resultado: 'OK', message: prod })
+        else
+            res.status(404).send({ resultado: 'Not Found', message: prod })
+
+    } catch (error) {
+        res.status(400).send({ error: `Error al eliminar productos: ${error}` })
+    }
 })
 
-routerProds.get('/realtimeproducts', async (req, res) => {
-    const prods = await productManager.getProducts();
-    res.render('realTimeProducts', { products: prods }); 
-});
-
-export default routerProds
+export default productRouter
 
 

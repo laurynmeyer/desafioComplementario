@@ -1,17 +1,17 @@
 import { Router } from "express";
-import CartManager from "../controllers/cartManager.js";
+import cartModel from "../models/carts.models.js";
 
 const routerCarts = Router();
-const cartManager = new CartManager("./src/models/carts.json");
+const CartModelInstance = new cartModel(); 
 
 routerCarts.post("/", async (req, res) => {
-  const newCart = await cartManager.createCart();
+  const newCart = await CartModelInstance.createCart(); 
   res.status(201).json(newCart);
 });
 
 routerCarts.get("/:cid", async (req, res) => {
   const { cid } = req.params;
-  const cart = await cartManager.getCartById(parseInt(cid));
+  const cart = await CartModelInstance.getCartById(parseInt(cid)); 
   if (cart) {
     res.status(200).json(cart);
   } else {
@@ -24,7 +24,7 @@ routerCarts.post("/:cid/product/:pid", async (req, res) => {
 
   const cartId = parseInt(cid);
   const productId = parseInt(pid);
-  const success = await cartManager.addProductToCart(cartId, productId);
+  const success = await CartModelInstance.addProductToCart(cartId, productId); 
 
   if (success) {
     res.status(200).send("Product added to cart");

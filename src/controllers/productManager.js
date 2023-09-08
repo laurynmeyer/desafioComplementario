@@ -100,20 +100,4 @@ export class Product {
     this.stock = stock;
   }
 }
-  /**
-async registration() {
-  const productManager = new ProductManager('./src/models/products.json'); 
-  const product1 = new Product("Dell Latitud 7470", "Procesador Intel. Memoria RAM de 16GB. Pantalla LED de 15. Es antirreflejo", 870000, true, "Sin imagen", "Dell01", 17);
-  const product2 = new Product("Dell Latitud 7460", "Procesador Intel. Memoria RAM de 8GB. Pantalla LED de 15. Es antirreflejo", 960000, true, "Sin imagen", "Dell02", 12);
-  const product3 = new Product("Dell Latitud 7420", "Procesador Intel. Memoria RAM de 4GB. Pantalla LED de 14. Es antirreflejo", 760000, true, "Sin imagen", "Dell03", 8);
-
-  await productManager.addProduct(product1);
-  await productManager.addProduct(product2);
-  await productManager.addProduct(product3);
-}
-}
-
-const product = new Product(); 
-product.registration(); 
-**/
 

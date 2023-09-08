@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
-import routerProds from './routes/products.routes.js';
+import productsRoutes from './routes/products.routes.js';
 import routerCarts from './routes/carts.routes.js';
 import fs from 'fs-extra';
 import ProductManager from './controllers/productManager.js';
@@ -64,7 +64,7 @@ app.use('/static', express.static(path.join(__dirname, '/public')));
 // si pongo app.use('/static', express.static(path.join(__dirname + '/public'))); Concatena la ruta 
 //y al buscarlo en el navegador debería poner http://localhost:4000/static/index.html
 //en upload, si quiero subir una imágen es single, para subir varias es fields
-app.use('/api/products', routerProds);
+app.use('/api/products', productsRoutes);
 
 //HBS
 
